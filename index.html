@@ -27,8 +27,17 @@
                 <li><a href="#intro">Введение</a></li>
                 <li><a href="#numbers">Числа силы</a></li>
                 <li><a href="#months">Месяцы</a></li>
+                <li><a href="#gallery">Галерея</a></li>
                 <li><a href="#manifest">Манифест</a></li>
             </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" title="Переключить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="pdf-export" id="pdfExport" title="Скачать PDF">
+                    📄 PDF
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -233,6 +242,103 @@
                         <li>Балансу работы и отдыха</li>
                     </ul>
                     <p class="pillar-warning">⚠️ Если ты игнорируешь тело, год сам нажмёт на паузу.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Year Progress Section -->
+    <section class="section section-progress" id="progress">
+        <div class="container">
+            <h2 class="section-title">Прогресс 2026 Года ⏳</h2>
+            <div class="progress-content">
+                <div class="progress-circle-container">
+                    <svg class="progress-ring" width="200" height="200">
+                        <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
+                        <circle class="progress-ring-circle" cx="100" cy="100" r="90" id="progressCircle"></circle>
+                    </svg>
+                    <div class="progress-text">
+                        <div class="progress-percent" id="progressPercent">0%</div>
+                        <div class="progress-label">прожито</div>
+                    </div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-stat">
+                        <div class="progress-stat-number" id="daysPassed">0</div>
+                        <div class="progress-stat-label">дней прошло</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-number" id="daysLeft">365</div>
+                        <div class="progress-stat-label">дней осталось</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-number" id="currentMonth">Январь</div>
+                        <div class="progress-stat-label">текущий месяц</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section section-gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Наш Путь 📸</h2>
+            <p class="section-subtitle">Воспоминания, которые ведут нас в будущее</p>
+            <div class="gallery-grid">
+                <div class="gallery-item featured">
+                    <img src="images/photo_01.jpg" alt="На пляже Дананга" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Дананг, наша точка силы 🌊</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_11.jpg" alt="Закат" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Золотой час 🌅</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_21.jpg" alt="Синяя рамка" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Взгляд в будущее 💙</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_06.jpg" alt="Вместе" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Наша синергия ❤️</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_13.jpg" alt="Пикник" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Лев на пляже 🦁</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_07.jpg" alt="Пагода" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Дух Вьетнама 🏯</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_05.jpg" alt="Море и горы" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Глубина и устойчивость 🏖️</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_08.jpg" alt="Романтика" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Моменты счастья 💕</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo_18.jpg" alt="Закат на море" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Спокойствие 🌊</span>
+                    </div>
                 </div>
             </div>
         </div>

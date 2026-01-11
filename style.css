@@ -1066,3 +1066,268 @@ body {
         display: none;
     }
 }
+
+/* Navigation Controls */
+.nav-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.theme-toggle,
+.pdf-export {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.theme-toggle:hover,
+.pdf-export:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.theme-icon {
+    font-size: 1.25rem;
+}
+
+/* Year Progress Section */
+.section-progress {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.progress-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-2xl);
+}
+
+.progress-circle-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 12;
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: url(#progressGradient);
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 565.48;
+    stroke-dashoffset: 565.48;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.progress-percent {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.progress-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+}
+
+.progress-stats {
+    display: flex;
+    gap: var(--spacing-2xl);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.progress-stat {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    min-width: 150px;
+}
+
+.progress-stat-number {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.progress-stat-label {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+/* Gallery Section */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+    transition: transform var(--transition-base);
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+}
+
+.gallery-item.featured {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(10, 14, 39, 0.95), transparent);
+    padding: var(--spacing-lg);
+    transform: translateY(100%);
+    transition: transform var(--transition-base);
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-caption {
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Dark Theme Support */
+body.light-theme {
+    --color-bg-dark: #f8fafc;
+    --color-bg-darker: #e2e8f0;
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-muted: #64748b;
+}
+
+body.light-theme .nav {
+    background: rgba(248, 250, 252, 0.9);
+}
+
+body.light-theme .nav.scrolled {
+    background: rgba(248, 250, 252, 0.95);
+}
+
+body.light-theme .hero {
+    background: linear-gradient(180deg, #f8fafc 0%, #e0e7ff 100%);
+}
+
+body.light-theme #starsCanvas {
+    opacity: 0.3;
+}
+
+body.light-theme .number-card,
+body.light-theme .synergy-card,
+body.light-theme .pillar-card,
+body.light-theme .quarter-card,
+body.light-theme .month-card {
+    background: rgba(15, 23, 42, 0.05);
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+body.light-theme .number-card:hover,
+body.light-theme .synergy-card:hover,
+body.light-theme .pillar-card:hover,
+body.light-theme .quarter-card:hover,
+body.light-theme .month-card:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+/* Responsive Gallery */
+@media (max-width: 768px) {
+    .gallery-item.featured {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .progress-stats {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .progress-stat {
+        width: 100%;
+    }
+
+    .nav-controls {
+        gap: var(--spacing-xs);
+    }
+
+    .pdf-export {
+        padding: var(--spacing-sm);
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .theme-toggle,
+    .pdf-export {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.75rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}

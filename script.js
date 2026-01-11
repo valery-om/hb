@@ -165,6 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollProgress();
     initNavScroll();
     initScrollAnimations();
+    initYearProgress();
+    initThemeToggle();
+    initPDFExport();
 });
 
 // Stars Canvas Animation
@@ -358,5 +361,106 @@ function initScrollAnimations() {
         card.style.transform = 'translateY(30px)';
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(card);
+    });
+}
+
+// Year Progress Tracker
+function initYearProgress() {
+    const progressPercent = document.getElementById('progressPercent');
+    const progressCircle = document.getElementById('progressCircle');
+    const daysPassed = document.getElementById('daysPassed');
+    const daysLeft = document.getElementById('daysLeft');
+    const currentMonth = document.getElementById('currentMonth');
+
+    if (!progressPercent) return;
+
+    function updateProgress() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const startOfYear = new Date(currentYear, 0, 1);
+        const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59);
+
+        const totalDays = Math.ceil((endOfYear - startOfYear) / (1000 * 60 * 60 * 24));
+        const passedDays = Math.ceil((now - startOfYear) / (1000 * 60 * 60 * 24));
+        const leftDays = totalDays - passedDays;
+        const percentage = Math.round((passedDays / totalDays) * 100);
+
+        // Months in Russian
+        const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+        // Update DOM
+        if (progressPercent) progressPercent.textContent = `${percentage}%`;
+        if (daysPassed) daysPassed.textContent = passedDays;
+        if (daysLeft) daysLeft.textContent = leftDays;
+        if (currentMonth) currentMonth.textContent = months[now.getMonth()];
+
+        // Animate circle
+        if (progressCircle) {
+            const circumference = 2 * Math.PI * 90; // radius = 90
+            const offset = circumference - (percentage / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+    }
+
+    updateProgress();
+    // Update every hour
+    setInterval(updateProgress, 3600000);
+}
+
+// Theme Toggle
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle?.querySelector('.theme-icon');
+
+    if (!themeToggle) return;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        if (themeIcon) themeIcon.textContent = '☀️';
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        const isLight = document.body.classList.contains('light-theme');
+
+        // Update icon
+        if (themeIcon) {
+            themeIcon.textContent = isLight ? '☀️' : '🌙';
+        }
+
+        // Save preference
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+}
+
+// PDF Export
+function initPDFExport() {
+    const pdfExport = document.getElementById('pdfExport');
+
+    if (!pdfExport) return;
+
+    pdfExport.addEventListener('click', async () => {
+        // Show loading state
+        const originalText = pdfExport.textContent;
+        pdfExport.textContent = '⏳ Создание PDF...';
+        pdfExport.disabled = true;
+
+        try {
+            // Use browser's print functionality
+            window.print();
+        } catch (error) {
+            console.error('PDF export failed:', error);
+            alert('Не удалось создать PDF. Попробуйте использовать Ctrl+P (Cmd+P на Mac)');
+        } finally {
+            // Restore button
+            setTimeout(() => {
+                pdfExport.textContent = originalText;
+                pdfExport.disabled = false;
+            }, 1000);
+        }
     });
 }
