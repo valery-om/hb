@@ -376,14 +376,14 @@ function initYearProgress() {
 
     function updateProgress() {
         const now = new Date();
-        const currentYear = now.getFullYear();
-        const startOfYear = new Date(currentYear, 0, 1);
-        const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59);
+        // Solar year: Jan 14, 2026 - Jan 13, 2027
+        const solarStart = new Date(2026, 0, 14);
+        const solarEnd = new Date(2027, 0, 13, 23, 59, 59);
 
-        const totalDays = Math.ceil((endOfYear - startOfYear) / (1000 * 60 * 60 * 24));
-        const passedDays = Math.ceil((now - startOfYear) / (1000 * 60 * 60 * 24));
-        const leftDays = totalDays - passedDays;
-        const percentage = Math.round((passedDays / totalDays) * 100);
+        const totalDays = Math.ceil((solarEnd - solarStart) / (1000 * 60 * 60 * 24));
+        const passedDays = Math.max(0, Math.ceil((now - solarStart) / (1000 * 60 * 60 * 24)));
+        const leftDays = Math.max(0, totalDays - passedDays);
+        const percentage = Math.min(100, Math.max(0, Math.round((passedDays / totalDays) * 100)));
 
         // Months in Russian
         const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
