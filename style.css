@@ -1653,8 +1653,10 @@ body.light-theme .month-card:hover {
 
 .quiz-months-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-md);
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .quiz-month-btn {
@@ -1865,6 +1867,7 @@ body.light-theme .month-card:hover {
         font-size: 0.875rem;
     }
 }
+
 /* Month Card Click Hint */
 .month-card::after {
     content: 'Кликни для подробностей →';
@@ -1891,4 +1894,20 @@ body.light-theme .month-card:hover {
     .quarters-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Anniversary date style for calendar */
+.calendar-day.anniversary {
+    background: rgba(236, 72, 153, 0.2);
+    border: 2px solid var(--color-accent);
+    font-weight: 700;
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+}
+
+.calendar-day.anniversary::after {
+    content: '💍';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 1rem;
 }

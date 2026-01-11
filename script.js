@@ -470,7 +470,7 @@ function initPDFExport() {
 function initCalendar() {
     const container = document.getElementById('calendarContainer');
     if (!container) return;
-    
+
     // Calendar data with daily insights
     const calendar2026 = {
         months: [
@@ -488,21 +488,23 @@ function initCalendar() {
             { name: 'Декабрь', energy: 'Итог и Планирование 2027', icon: '❄️' }
         ],
         specialDates: {
-            '2026-01-14': { type: 'birthday', label: 'День Рождения! 🎂', energy: 'Запуск соляра' },
+            '2026-01-14': { type: 'birthday', label: 'День Рождения Льва! 🎂', energy: 'Запуск соляра' },
+            '2026-08-11': { type: 'birthday', label: 'День Рождения Валерии! 💝', energy: 'Праздник любви' },
             '2026-09-01': { type: 'special', label: 'Пик года', energy: 'Лучшие финансовые окна' },
+            '2026-09-11': { type: 'anniversary', label: 'Годовщина свадьбы! 💍', energy: 'Праздник нашего союза' },
             '2026-10-01': { type: 'special', label: 'Урожай', energy: 'Самый прибыльный месяц' }
         }
     };
-    
+
     // Generate calendar for all 12 months
     function generateCalendar() {
         container.innerHTML = '';
         const dayLabels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-        
+
         calendar2026.months.forEach((month, monthIndex) => {
             const monthDiv = document.createElement('div');
             monthDiv.className = 'calendar-month';
-            
+
             // Month header
             const header = document.createElement('div');
             header.className = 'calendar-month-header';
@@ -511,11 +513,11 @@ function initCalendar() {
                 <div class="calendar-month-energy">${month.energy}</div>
             `;
             monthDiv.appendChild(header);
-            
+
             // Calendar grid
             const grid = document.createElement('div');
             grid.className = 'calendar-grid';
-            
+
             // Day labels
             dayLabels.forEach(label => {
                 const dayLabel = document.createElement('div');
@@ -523,59 +525,64 @@ function initCalendar() {
                 dayLabel.textContent = label;
                 grid.appendChild(dayLabel);
             });
-            
+
             // Get first day of month and total days
             const firstDay = new Date(2026, monthIndex, 1);
             const lastDay = new Date(2026, monthIndex + 1, 0);
             const daysInMonth = lastDay.getDate();
             const startingDayOfWeek = firstDay.getDay() || 7; // Monday = 1
-            
+
             // Empty cells before month starts
             for (let i = 1; i < startingDayOfWeek; i++) {
                 const emptyDay = document.createElement('div');
                 emptyDay.className = 'calendar-day empty';
                 grid.appendChild(emptyDay);
             }
-            
+
             // Days of the month
             const today = new Date();
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(2026, monthIndex, day);
                 const dateString = `2026-${String(monthIndex + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 const dayOfWeek = date.getDay();
-                
+
                 const dayCell = document.createElement('div');
                 dayCell.className = 'calendar-day';
                 dayCell.textContent = day;
                 dayCell.dataset.date = dateString;
                 dayCell.dataset.month = month.name;
-                
+
                 // Add classes
-                if (dateString === '2026-01-14') {
-                    dayCell.classList.add('birthday');
-                } else if (calendar2026.specialDates[dateString]) {
-                    dayCell.classList.add('special');
+                const specialDate = calendar2026.specialDates[dateString];
+                if (specialDate) {
+                    if (specialDate.type === 'birthday') {
+                        dayCell.classList.add('birthday');
+                    } else if (specialDate.type === 'anniversary') {
+                        dayCell.classList.add('anniversary');
+                    } else {
+                        dayCell.classList.add('special');
+                    }
                 }
-                
+
                 if (dayOfWeek === 0 || dayOfWeek === 6) {
                     dayCell.classList.add('weekend');
                 }
-                
+
                 if (date.toDateString() === today.toDateString()) {
                     dayCell.classList.add('current');
                 }
-                
+
                 // Click handler
                 dayCell.addEventListener('click', () => showDayInfo(dateString, day, month.name));
-                
+
                 grid.appendChild(dayCell);
             }
-            
+
             monthDiv.appendChild(grid);
             container.appendChild(monthDiv);
         });
     }
-    
+
     // Show day information in modal
     function showDayInfo(dateString, day, monthName) {
         const modal = document.getElementById('calendarModal');
@@ -583,25 +590,25 @@ function initCalendar() {
         const modalNumber = document.getElementById('modalNumber');
         const modalEnergy = document.getElementById('modalEnergy');
         const modalRecommendations = document.getElementById('modalRecommendations');
-        
+
         if (!modal) return;
-        
+
         // Calculate day number in solar year (from Jan 14)
         const solarStart = new Date(2026, 0, 14);
         const currentDate = new Date(dateString);
         const daysSinceBirthday = Math.ceil((currentDate - solarStart) / (1000 * 60 * 60 * 24));
-        
+
         // Get month energy
         const monthIndex = parseInt(dateString.split('-')[1]) - 1;
         const monthData = calendar2026.months[monthIndex];
-        
+
         // Check for special dates
         const specialDate = calendar2026.specialDates[dateString];
-        
+
         // Build modal content
         modalDate.textContent = `${day} ${monthName} 2026`;
         modalNumber.textContent = specialDate ? specialDate.label : `День ${daysSinceBirthday} соляра`;
-        
+
         let energyHTML = `<h3>Энергия дня</h3>`;
         if (specialDate) {
             energyHTML += `<p><strong>${specialDate.energy}</strong></p>`;
@@ -609,7 +616,7 @@ function initCalendar() {
             energyHTML += `<p>Общая энергия месяца: ${monthData.energy}</p>`;
         }
         modalEnergy.innerHTML = energyHTML;
-        
+
         // Generate recommendations
         const recommendations = generateDayRecommendations(dateString, daysSinceBirthday, monthData);
         let recsHTML = `<h3>Рекомендации</h3><ul>`;
@@ -618,28 +625,28 @@ function initCalendar() {
         });
         recsHTML += `</ul>`;
         modalRecommendations.innerHTML = recsHTML;
-        
+
         // Show modal
         modal.classList.add('active');
     }
-    
+
     // Generate smart recommendations based on date
     function generateDayRecommendations(dateString, dayNumber, monthData) {
         const recommendations = [];
         const dayOfWeek = new Date(dateString).getDay();
-        
+
         // Day of week recommendations
         if (dayOfWeek === 1) recommendations.push('Понедельник  - планируй неделю');
         if (dayOfWeek === 5) recommendations.push('Пятница - подведи итоги недели');
         if (dayOfWeek === 0 || dayOfWeek === 6) recommendations.push('Выходной - время для восстановления');
-        
+
         // Birthday period
         if (dayNumber <= 7) {
             recommendations.push('Первая неделя соляра - закладываем фундамент');
         } else if (dayNumber > 358) {
             recommendations.push('Завершение соляра - подводим итоги года');
         }
-        
+
         // Based on month energy
         if (monthData.name === 'Январь') {
             recommendations.push('Пропиши финансовую цель на год');
@@ -650,30 +657,30 @@ function initCalendar() {
         } else if (monthData.name === 'Октябрь') {
             recommendations.push('Лучшее время для финансов');
         }
-        
+
         // General solar year guidance
         recommendations.push('Год №7 - фокус на качестве, не количестве');
-        
+
         return recommendations;
     }
-    
+
     // Close modal
     const modal = document.getElementById('calendarModal');
     const modalClose = document.getElementById('modalClose');
     const modalOverlay = modal?.querySelector('.calendar-modal-overlay');
-    
+
     if (modalClose) {
         modalClose.addEventListener('click', () => {
             modal.classList.remove('active');
         });
     }
-    
+
     if (modalOverlay) {
         modalOverlay.addEventListener('click', () => {
             modal.classList.remove('active');
         });
     }
-    
+
     // Generate calendar
     generateCalendar();
 }
@@ -682,9 +689,9 @@ function initCalendar() {
 function initQuiz() {
     const quizMonthsGrid = document.getElementById('quizMonthsGrid');
     const quizResult = document.getElementById('quizResult');
-    
+
     if (!quizMonthsGrid || !quizResult) return;
-    
+
     // Monthly wishes data with personalized content
     const monthlyWishes = [
         {
@@ -844,7 +851,7 @@ function initQuiz() {
             affirmation: 'Год пройден! Я горжусь собой! ❄️✨'
         }
     ];
-    
+
     // Generate month buttons
     monthlyWishes.forEach((month, index) => {
         const btn = document.createElement('button');
@@ -856,7 +863,7 @@ function initQuiz() {
         btn.addEventListener('click', () => showMonthResult(month, btn));
         quizMonthsGrid.appendChild(btn);
     });
-    
+
     // Show selected month result
     function showMonthResult(month, selectedBtn) {
         // Update active button
@@ -864,7 +871,7 @@ function initQuiz() {
             btn.classList.remove('active');
         });
         selectedBtn.classList.add('active');
-        
+
         // Build result HTML
         let resultHTML = `
             <div class="quiz-result-content">
@@ -882,11 +889,11 @@ function initQuiz() {
                     <h3>🎯 Напутствия на месяц</h3>
                     <ul class="quiz-result-guidance-list">
         `;
-        
+
         month.guidance.forEach(item => {
             resultHTML += `<li>${item}</li>`;
         });
-        
+
         resultHTML += `
                     </ul>
                 </div>
@@ -896,9 +903,9 @@ function initQuiz() {
                 </div>
             </div>
         `;
-        
+
         quizResult.innerHTML = resultHTML;
-        
+
         // Smooth scroll to result
         quizResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -907,7 +914,6 @@ function initQuiz() {
 // Add to initialization
 document.addEventListener('DOMContentLoaded', () => {
     initStars();
-    initMonths();
     initScrollProgress();
     initNavScroll();
     initScrollAnimations();
