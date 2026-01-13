@@ -366,48 +366,47 @@ function initScrollAnimations() {
     });
 }
 
-// Year Progress Tracker
+// Solar Timer (Elapsed Time)
 function initYearProgress() {
-    const progressPercent = document.getElementById('progressPercent');
-    const progressCircle = document.getElementById('progressCircle');
-    const daysPassed = document.getElementById('daysPassed');
-    const daysLeft = document.getElementById('daysLeft');
-    const currentMonth = document.getElementById('currentMonth');
+    const timerDays = document.getElementById('timerDays');
+    const timerHours = document.getElementById('timerHours');
+    const timerMinutes = document.getElementById('timerMinutes');
+    const timerSeconds = document.getElementById('timerSeconds');
+    const timerMessage = document.getElementById('timerMessage');
+    
+    if (!timerDays) return;
 
-    if (!progressPercent) return;
-
-    function updateProgress() {
+    function updateTimer() {
         const now = new Date();
-        // Solar year: Jan 14, 2026 - Jan 13, 2027
-        const solarStart = new Date(2026, 0, 14);
-        const solarEnd = new Date(2027, 0, 13, 23, 59, 59);
+        const solarStart = new Date(2026, 0, 14, 0, 0, 0); // Jan 14, 2026
+        
+        let diff = now - solarStart;
+        let isStarted = diff >= 0;
 
-        const totalDays = Math.ceil((solarEnd - solarStart) / (1000 * 60 * 60 * 24));
-        const passedDays = Math.max(0, Math.ceil((now - solarStart) / (1000 * 60 * 60 * 24)));
-        const leftDays = Math.max(0, totalDays - passedDays);
-        const percentage = Math.min(100, Math.max(0, Math.round((passedDays / totalDays) * 100)));
+        if (!isStarted) {
+            // Countdown mode
+            diff = Math.abs(diff);
+            if(timerMessage) timerMessage.textContent = "До старта твоего Соляра осталось:";
+        } else {
+            // Elapsed mode
+            if(timerMessage) timerMessage.textContent = "Твой персональный год длится уже:";
+        }
 
-        // Months in Russian
-        const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
         // Update DOM
-        if (progressPercent) progressPercent.textContent = `${percentage}%`;
-        if (daysPassed) daysPassed.textContent = passedDays;
-        if (daysLeft) daysLeft.textContent = leftDays;
-        if (currentMonth) currentMonth.textContent = months[now.getMonth()];
-
-        // Animate circle
-        if (progressCircle) {
-            const circumference = 2 * Math.PI * 90; // radius = 90
-            const offset = circumference - (percentage / 100) * circumference;
-            progressCircle.style.strokeDashoffset = offset;
-        }
+        timerDays.textContent = days;
+        timerHours.textContent = String(hours).padStart(2, '0');
+        timerMinutes.textContent = String(minutes).padStart(2, '0');
+        timerSeconds.textContent = String(seconds).padStart(2, '0');
     }
 
-    updateProgress();
-    // Update every hour
-    setInterval(updateProgress, 3600000);
+    // Update immediately and then every second
+    updateTimer();
+    setInterval(updateTimer, 1000);
 }
 
 // Theme Toggle

@@ -2105,3 +2105,89 @@ body.light-theme .month-card:hover {
 .music-icon {
     filter: drop-shadow(0 0 5px var(--color-gold-glow));
 }
+
+/* --- Solar Timer Section (New) --- */
+.section-progress .progress-content {
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.solar-timer-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timer-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.timer-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-gold);
+    box-shadow: 0 15px 40px rgba(var(--color-gold-rgb), 0.2);
+}
+
+.timer-value {
+    font-size: 3rem;
+    font-family: var(--font-heading);
+    color: var(--color-gold);
+    text-shadow: 0 0 20px rgba(var(--color-gold-rgb), 0.4);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-gray-400);
+}
+
+/* Timer glow animation */
+.timer-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease;
+}
+
+.timer-card:hover::before {
+    opacity: 1;
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(0.8); }
+}
+
+@media (max-width: 768px) {
+    .solar-timer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .timer-value {
+        font-size: 2.5rem;
+    }
+}

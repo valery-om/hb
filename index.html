@@ -258,31 +258,28 @@
     <!-- Year Progress Section -->
     <section class="section section-progress" id="progress">
         <div class="container">
-            <h2 class="section-title">Прогресс 2026 Года ⏳</h2>
+            <h2 class="section-title">Таймер Соляра ⏳</h2>
             <div class="progress-content">
-                <div class="progress-circle-container">
-                    <svg class="progress-ring" width="200" height="200">
-                        <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
-                        <circle class="progress-ring-circle" cx="100" cy="100" r="90" id="progressCircle"></circle>
-                    </svg>
-                    <div class="progress-text">
-                        <div class="progress-percent" id="progressPercent">0%</div>
-                        <div class="progress-label">прожито</div>
+                <div class="solar-timer-container" id="solarTimer">
+                    <div class="timer-card">
+                        <span class="timer-value" id="timerDays">0</span>
+                        <span class="timer-label">Дней</span>
+                    </div>
+                    <div class="timer-card">
+                        <span class="timer-value" id="timerHours">00</span>
+                        <span class="timer-label">Часов</span>
+                    </div>
+                    <div class="timer-card">
+                        <span class="timer-value" id="timerMinutes">00</span>
+                        <span class="timer-label">Минут</span>
+                    </div>
+                    <div class="timer-card">
+                        <span class="timer-value" id="timerSeconds">00</span>
+                        <span class="timer-label">Секунд</span>
                     </div>
                 </div>
-                <div class="progress-stats">
-                    <div class="progress-stat">
-                        <div class="progress-stat-number" id="daysPassed">0</div>
-                        <div class="progress-stat-label">дней прошло</div>
-                    </div>
-                    <div class="progress-stat">
-                        <div class="progress-stat-number" id="daysLeft">365</div>
-                        <div class="progress-stat-label">дней осталось</div>
-                    </div>
-                    <div class="progress-stat">
-                        <div class="progress-stat-number" id="currentMonth">Январь</div>
-                        <div class="progress-stat-label">текущий месяц</div>
-                    </div>
+                <div class="progress-details" style="margin-top: 2rem;">
+                    <p class="progress-message" id="timerMessage">Твой персональный год набирает обороты...</p>
                 </div>
             </div>
         </div>
