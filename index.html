@@ -33,6 +33,9 @@
                 <li><a href="#manifest">Манифест</a></li>
             </ul>
             <div class="nav-controls">
+                <button class="music-toggle" id="musicToggle" title="Включить музыку">
+                    <span class="music-icon">🔇</span>
+                </button>
                 <button class="theme-toggle" id="themeToggle" title="Переключить тему">
                     <span class="theme-icon">🌙</span>
                 </button>
@@ -42,6 +45,9 @@
             </div>
         </div>
     </nav>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
