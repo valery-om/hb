@@ -541,6 +541,10 @@ function initOracle() {
         // Add shaking effect
         magicBall.classList.add('shaking');
         oraclePlaceholder.textContent = "Спрашиваю Вселенную...";
+        
+        // Reset ball text to ? while thinking
+        const ballText = magicBall.querySelector('.magic-ball-text');
+        if (ballText) ballText.textContent = '?';
 
         // Random delay for "thinking"
         setTimeout(() => {
@@ -556,7 +560,11 @@ function initOracle() {
 
         oracleText.textContent = prediction;
         oraclePlaceholder.classList.add('hidden');
-
+        
+        // Change ball text to star
+        const ballText = magicBall.querySelector('.magic-ball-text');
+        if (ballText) ballText.textContent = '✨';
+        
         oracleResults.classList.remove('hidden');
         // Small delay to allow display:block to apply before opacity transition
         requestAnimationFrame(() => {
