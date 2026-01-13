@@ -560,9 +560,12 @@ function initOracle() {
         oracleText.textContent = prediction;
         oraclePlaceholder.classList.add('hidden');
         
-        // Change ball text to star
-        const ballText = magicBall.querySelector('.magic-ball-text');
-        if (ballText) ballText.textContent = '✨';
+        // Change ball text to star - force update
+        const ballText = document.querySelector('.magic-ball-text'); // Safer selector
+        if (ballText) {
+            ballText.innerHTML = '✨'; // Use innerHTML to ensure render
+            ballText.style.display = 'block'; // Ensure visibility
+        }
         
         oracleResults.classList.remove('hidden');
         // Small delay to allow display:block to apply before opacity transition
