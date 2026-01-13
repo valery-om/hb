@@ -373,23 +373,23 @@ function initYearProgress() {
     const timerMinutes = document.getElementById('timerMinutes');
     const timerSeconds = document.getElementById('timerSeconds');
     const timerMessage = document.getElementById('timerMessage');
-    
+
     if (!timerDays) return;
 
     function updateTimer() {
         const now = new Date();
         const solarStart = new Date(2026, 0, 14, 0, 0, 0); // Jan 14, 2026
-        
+
         let diff = now - solarStart;
         let isStarted = diff >= 0;
 
         if (!isStarted) {
             // Countdown mode
             diff = Math.abs(diff);
-            if(timerMessage) timerMessage.textContent = "До старта твоего Соляра осталось:";
+            if (timerMessage) timerMessage.textContent = "До старта твоего Соляра осталось:";
         } else {
             // Elapsed mode
-            if(timerMessage) timerMessage.textContent = "Твой персональный год длится уже:";
+            if (timerMessage) timerMessage.textContent = "Твой персональный год длится уже:";
         }
 
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -410,31 +410,28 @@ function initYearProgress() {
 }
 
 // Theme Toggle
+// Theme Toggle
 function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle?.querySelector('.theme-icon');
+    const themeCheckbox = document.getElementById('themeToggleCheckbox');
 
-    if (!themeToggle) return;
+    if (!themeCheckbox) return;
 
     // Load saved theme
     const savedTheme = localStorage.getItem('theme') || 'dark';
     if (savedTheme === 'light') {
         document.body.classList.add('light-theme');
-        if (themeIcon) themeIcon.textContent = '☀️';
+        themeCheckbox.checked = true;
     }
 
     // Toggle theme
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
-        const isLight = document.body.classList.contains('light-theme');
-
-        // Update icon
-        if (themeIcon) {
-            themeIcon.textContent = isLight ? '☀️' : '🌙';
+    themeCheckbox.addEventListener('change', () => {
+        if (themeCheckbox.checked) {
+            document.body.classList.add('light-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.body.classList.remove('light-theme');
+            localStorage.setItem('theme', 'dark');
         }
-
-        // Save preference
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 }
 
@@ -540,7 +537,7 @@ function initOracle() {
         // Add shaking effect
         magicBall.classList.add('shaking');
         oraclePlaceholder.textContent = "Спрашиваю Вселенную...";
-        
+
         // Reset ball text to ? while thinking
         const ballText = magicBall.querySelector('.magic-ball-text');
         if (ballText) ballText.textContent = '?';
@@ -559,14 +556,14 @@ function initOracle() {
 
         oracleText.textContent = prediction;
         oraclePlaceholder.classList.add('hidden');
-        
+
         // Change ball text to star - force update
         const ballText = document.querySelector('.magic-ball-text'); // Safer selector
         if (ballText) {
             ballText.innerHTML = '✨'; // Use innerHTML to ensure render
             ballText.style.display = 'block'; // Ensure visibility
         }
-        
+
         oracleResults.classList.remove('hidden');
         // Small delay to allow display:block to apply before opacity transition
         requestAnimationFrame(() => {
