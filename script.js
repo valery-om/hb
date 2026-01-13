@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initYearProgress();
     initThemeToggle();
     initPDFExport();
-    initCalendar();
+    initOracle();
 });
 
 // Stars Canvas Animation
@@ -466,224 +466,104 @@ function initPDFExport() {
     });
 }
 
-// Interactive Calendar 2026
-function initCalendar() {
-    const container = document.getElementById('calendarContainer');
-    if (!container) return;
 
-    // Calendar data with daily insights
-    const calendar2026 = {
-        months: [
-            { name: 'Январь', energy: 'Сборка Ядра. Запуск Финансового Потока', icon: '🌙' },
-            { name: 'Февраль', energy: 'Очищение и Проявление', icon: '🌸' },
-            { name: 'Март', energy: 'Новый Старт. Расширение', icon: '🌱' },
-            { name: 'Апрель', energy: 'Синергия и Углубление', icon: '🌿' },
-            { name: 'Май', energy: 'Творческий Прорыв и Расцвет', icon: '🌺' },
-            { name: 'Июнь', energy: 'Дисциплина и Гармония', icon: '☀️' },
-            { name: 'Июль', energy: 'Ветер Перемен и Прорыв', icon: '🌊' },
-            { name: 'Август', energy: 'Сияние и Перекрёсток', icon: '🔥' },
-            { name: 'Сентябрь', energy: 'Точка Сборки. Пик Личного Года', icon: '⭐' },
-            { name: 'Октябрь', energy: 'Финансовый Урожай и Трансформация', icon: '🍁' },
-            { name: 'Ноябрь', energy: 'Глобальный Взгляд и Отсев', icon: '🌍' },
-            { name: 'Декабрь', energy: 'Итог и Планирование 2027', icon: '❄️' }
-        ],
-        specialDates: {
-            '2026-01-14': { type: 'birthday', label: 'День Рождения Льва! 🎂', energy: 'Запуск соляра' },
-            '2026-08-11': { type: 'birthday', label: 'День Рождения Валерии! 💝', energy: 'Праздник любви' },
-            '2026-09-01': { type: 'special', label: 'Пик года', energy: 'Лучшие финансовые окна' },
-            '2026-09-11': { type: 'anniversary', label: 'Годовщина свадьбы! 💍', energy: 'Праздник нашего союза' },
-            '2026-10-01': { type: 'special', label: 'Урожай', energy: 'Самый прибыльный месяц' }
-        }
-    };
+// Magic Oracle
+function initOracle() {
+    const magicBall = document.getElementById('magicBall');
+    const oracleMessageContainer = document.getElementById('oracleMessageContainer');
+    const oracleResults = document.getElementById('oracleResult');
+    const oracleText = document.getElementById('oracleText');
+    const oraclePlaceholder = oracleMessageContainer.querySelector('.oracle-placeholder');
 
-    // Generate calendar for all 12 months
-    function generateCalendar() {
-        container.innerHTML = '';
-        const dayLabels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    if (!magicBall || !oracleResults) return;
 
-        calendar2026.months.forEach((month, monthIndex) => {
-            const monthDiv = document.createElement('div');
-            monthDiv.className = 'calendar-month';
+    const messages = [
+        // Inspiration & Action
+        "Действуй смело! Звезды на твоей стороне. 🚀",
+        "Идея, которая пришла сегодня — гениальна. Запиши её! 💡",
+        "Ты стоишь на пороге большого прорыва. Верь в себя! ⭐",
+        "Ответ находится внутри тебя. Прислушайся. 🧘‍♂️",
+        "Сегодня идеальный день для начала нового. 🌱",
+        "Твоя харизма сегодня способна открыть любые двери. 🦁",
+        "Не бойся масштаба. Ты готов к большему! 🌍",
+        "Доверься потоку, он вынесет тебя в нужное место. 🌊",
+        "Сфокусируйся на одной главной цели. Успех гарантирован. 🎯",
+        "Рискни! Удача любит смелых. 🔥",
 
-            // Month header
-            const header = document.createElement('div');
-            header.className = 'calendar-month-header';
-            header.innerHTML = `
-                <div class="calendar-month-title">${month.icon} ${month.name}</div>
-                <div class="calendar-month-energy">${month.energy}</div>
-            `;
-            monthDiv.appendChild(header);
+        // Love & Support
+        "Ты не один. Мы — команда! ❤️",
+        "Твоя сила — в твоем сердце. Люблю тебя! 💖",
+        "Помнишь, как мы мечтали? Скоро это сбудется. ✨",
+        "Ты — мой герой каждый день. 🦸‍♂️",
+        "Позвони мне, у меня есть для тебя сюрприз! 🎁",
+        "Ты делаешь мир лучше просто тем, что ты есть. 🌟",
+        "Наша синергия сегодня на максимуме. Давай творить! 👩‍❤️‍👨",
+        "Ты невероятный муж и отец. Горжусь тобой! 👪",
 
-            // Calendar grid
-            const grid = document.createElement('div');
-            grid.className = 'calendar-grid';
+        // Money & Business
+        "Деньги любят тишину и твою уверенность. 💰",
+        "Финансовый поток расширяется. Будь готов принимать! 💸",
+        "Качество — твой главный козырь. Держи марку. ⭐",
+        "Инвестируй в себя — это лучшие вложения. 📈",
+        "Новый контакт принесет большие перспективы. 🤝",
+        "Систематизируй хаос, и придет прибыль. 📊",
+        "Твой личный бренд сияет. Покажи себя миру! 📢",
+        "Сегодня удачный день для переговоров. 🗣️",
 
-            // Day labels
-            dayLabels.forEach(label => {
-                const dayLabel = document.createElement('div');
-                dayLabel.className = 'calendar-day-label';
-                dayLabel.textContent = label;
-                grid.appendChild(dayLabel);
-            });
+        // Mystical
+        "Знаки повсюду. Смотри внимательнее. 👀",
+        "Вселенная готовит для тебя подарок. 🎁",
+        "Твой ангел-хранитель сегодня работает сверхурочно. 😇",
+        "Магия момента — здесь и сейчас. ✨"
+    ];
 
-            // Get first day of month and total days
-            const firstDay = new Date(2026, monthIndex, 1);
-            const lastDay = new Date(2026, monthIndex + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDayOfWeek = firstDay.getDay() || 7; // Monday = 1
+    let isAnimating = false;
 
-            // Empty cells before month starts
-            for (let i = 1; i < startingDayOfWeek; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'calendar-day empty';
-                grid.appendChild(emptyDay);
-            }
+    magicBall.addEventListener('click', () => {
+        if (isAnimating) return;
+        isAnimating = true;
 
-            // Days of the month
-            const today = new Date();
-            for (let day = 1; day <= daysInMonth; day++) {
-                const date = new Date(2026, monthIndex, day);
-                const dateString = `2026-${String(monthIndex + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const dayOfWeek = date.getDay();
-
-                const dayCell = document.createElement('div');
-                dayCell.className = 'calendar-day';
-                dayCell.textContent = day;
-                dayCell.dataset.date = dateString;
-                dayCell.dataset.month = month.name;
-
-                // Add classes
-                const specialDate = calendar2026.specialDates[dateString];
-                if (specialDate) {
-                    if (specialDate.type === 'birthday') {
-                        dayCell.classList.add('birthday');
-                    } else if (specialDate.type === 'anniversary') {
-                        dayCell.classList.add('anniversary');
-                    } else {
-                        dayCell.classList.add('special');
-                    }
-                }
-
-                if (dayOfWeek === 0 || dayOfWeek === 6) {
-                    dayCell.classList.add('weekend');
-                }
-
-                if (date.toDateString() === today.toDateString()) {
-                    dayCell.classList.add('current');
-                }
-
-                // Click handler
-                dayCell.addEventListener('click', () => showDayInfo(dateString, day, month.name));
-
-                grid.appendChild(dayCell);
-            }
-
-            monthDiv.appendChild(grid);
-            container.appendChild(monthDiv);
-        });
-    }
-
-    // Show day information in modal
-    function showDayInfo(dateString, day, monthName) {
-        const modal = document.getElementById('calendarModal');
-        const modalDate = document.getElementById('modalDate');
-        const modalNumber = document.getElementById('modalNumber');
-        const modalEnergy = document.getElementById('modalEnergy');
-        const modalRecommendations = document.getElementById('modalRecommendations');
-
-        if (!modal) return;
-
-        // Calculate day number in solar year (from Jan 14)
-        const solarStart = new Date(2026, 0, 14);
-        const currentDate = new Date(dateString);
-        const daysSinceBirthday = Math.ceil((currentDate - solarStart) / (1000 * 60 * 60 * 24));
-
-        // Get month energy
-        const monthIndex = parseInt(dateString.split('-')[1]) - 1;
-        const monthData = calendar2026.months[monthIndex];
-
-        // Check for special dates
-        const specialDate = calendar2026.specialDates[dateString];
-
-        // Build modal content
-        modalDate.textContent = `${day} ${monthName} 2026`;
-        modalNumber.textContent = specialDate ? specialDate.label : `День ${daysSinceBirthday} соляра`;
-
-        let energyHTML = `<h3>Энергия дня</h3>`;
-        if (specialDate) {
-            energyHTML += `<p><strong>${specialDate.energy}</strong></p>`;
+        // Reset previous result
+        if (oracleResults.classList.contains('visible')) {
+            oracleResults.classList.remove('visible');
+            setTimeout(() => {
+                oracleResults.classList.add('hidden');
+                oraclePlaceholder.classList.remove('hidden');
+                startAnimation();
+            }, 300);
         } else {
-            energyHTML += `<p>Общая энергия месяца: ${monthData.energy}</p>`;
+            startAnimation();
         }
-        modalEnergy.innerHTML = energyHTML;
+    });
 
-        // Generate recommendations
-        const recommendations = generateDayRecommendations(dateString, daysSinceBirthday, monthData);
-        let recsHTML = `<h3>Рекомендации</h3><ul>`;
-        recommendations.forEach(rec => {
-            recsHTML += `<li>${rec}</li>`;
-        });
-        recsHTML += `</ul>`;
-        modalRecommendations.innerHTML = recsHTML;
+    function startAnimation() {
+        // Add shaking effect
+        magicBall.classList.add('shaking');
+        oraclePlaceholder.textContent = "Спрашиваю Вселенную...";
 
-        // Show modal
-        modal.classList.add('active');
+        // Random delay for "thinking"
+        setTimeout(() => {
+            magicBall.classList.remove('shaking');
+            showPrediction();
+            isAnimating = false;
+        }, 1500);
     }
 
-    // Generate smart recommendations based on date
-    function generateDayRecommendations(dateString, dayNumber, monthData) {
-        const recommendations = [];
-        const dayOfWeek = new Date(dateString).getDay();
+    function showPrediction() {
+        const randomIndex = Math.floor(Math.random() * messages.length);
+        const prediction = messages[randomIndex];
 
-        // Day of week recommendations
-        if (dayOfWeek === 1) recommendations.push('Понедельник  - планируй неделю');
-        if (dayOfWeek === 5) recommendations.push('Пятница - подведи итоги недели');
-        if (dayOfWeek === 0 || dayOfWeek === 6) recommendations.push('Выходной - время для восстановления');
+        oracleText.textContent = prediction;
+        oraclePlaceholder.classList.add('hidden');
 
-        // Birthday period
-        if (dayNumber <= 7) {
-            recommendations.push('Первая неделя соляра - закладываем фундамент');
-        } else if (dayNumber > 358) {
-            recommendations.push('Завершение соляра - подводим итоги года');
-        }
-
-        // Based on month energy
-        if (monthData.name === 'Январь') {
-            recommendations.push('Пропиши финансовую цель на год');
-        } else if (monthData.name === 'Май') {
-            recommendations.push('Время для творческих проектов');
-        } else if (monthData.name === 'Сентябрь') {
-            recommendations.push('Пик года - максимум активности');
-        } else if (monthData.name === 'Октябрь') {
-            recommendations.push('Лучшее время для финансов');
-        }
-
-        // General solar year guidance
-        recommendations.push('Год №7 - фокус на качестве, не количестве');
-
-        return recommendations;
-    }
-
-    // Close modal
-    const modal = document.getElementById('calendarModal');
-    const modalClose = document.getElementById('modalClose');
-    const modalOverlay = modal?.querySelector('.calendar-modal-overlay');
-
-    if (modalClose) {
-        modalClose.addEventListener('click', () => {
-            modal.classList.remove('active');
+        oracleResults.classList.remove('hidden');
+        // Small delay to allow display:block to apply before opacity transition
+        requestAnimationFrame(() => {
+            oracleResults.classList.add('visible');
         });
     }
-
-    if (modalOverlay) {
-        modalOverlay.addEventListener('click', () => {
-            modal.classList.remove('active');
-        });
-    }
-
-    // Generate calendar
-    generateCalendar();
 }
+
 
 // Monthly Wishes Quiz
 function initQuiz() {
@@ -920,6 +800,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initYearProgress();
     initThemeToggle();
     initPDFExport();
-    initCalendar();
+    initOracle();
     initQuiz();
 });
